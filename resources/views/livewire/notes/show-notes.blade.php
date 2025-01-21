@@ -1,9 +1,16 @@
 <?php
 use Illuminate\Support\Facades\Auth;
 use Livewire\Volt\Component;
+use App\Models\Note;
 
 new class extends Component {
-        public function with():array
+
+        public function delete($noteId){
+            $note = Note::where('id',$noteId)->first();
+            $note->delete();
+        }
+
+        public function with() :array
         {
             return [
                 'notes' => Auth::user()
@@ -24,13 +31,18 @@ new class extends Component {
 
 @else
 <x-button primary icon-right="plus" class="mb-6" href="{{route('notes.create')}}" wire:navigate>Create note</x-button>
-<div class="grid grid-cols-2 gap-4">
+<div class="grid grid-cols-3 gap-4">
 @foreach ($notes as $note)
     <x-card wire:key='{{$note->id}}' mt-12>
       <div class="flex justify-between">
+      <div>
+      
      <a href="#" 
         class="text-xl font-bold hover:underline hover:text-blue-500">{{$note->title}}</a>
-
+            <p class="mt-4 text-xs "> 
+                {{Str::limit($note->body,50)}}
+            </p>
+      </div>
         <div class="text-xs text-gray-500">{{ \Carbon\Carbon::parse($note->send_date)->format('M-d-Y')}} 
         </div>
       </div> 
@@ -39,7 +51,7 @@ new class extends Component {
       <p class="text-xs">Receipient: <span class="font-semibold">{{$note->recipient}}</span></p>
       <div>
             <x-button flat icon="eye"></x-button>
-            <x-button flat icon="trash"></x-button>
+            <x-button flat icon="trash" wire:click="delete('{{$note->id}}')"></x-button>
         </div>
       </div>
     </x-card>
