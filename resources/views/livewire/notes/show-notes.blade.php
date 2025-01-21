@@ -23,10 +23,10 @@ new class extends Component {
 </div>
 
 @else
-
-<div class="grid grid-cols-2 gap-4 mt-12">
+<x-button primary icon-right="plus" class="mb-6" href="{{route('notes.create')}}" wire:navigate>Create note</x-button>
+<div class="grid grid-cols-2 gap-4">
 @foreach ($notes as $note)
-    <x-card wire:key='{{$note->id}}'>
+    <x-card wire:key='{{$note->id}}' mt-12>
       <div class="flex justify-between">
      <a href="#" 
         class="text-xl font-bold hover:underline hover:text-blue-500">{{$note->title}}</a>
@@ -36,7 +36,7 @@ new class extends Component {
       </div> 
       
       <div class="flex items-end justify-between mt-4 space-x-1">
-      <p class="text-xs">Receipient: <span class="font-semibold"></span></p>
+      <p class="text-xs">Receipient: <span class="font-semibold">{{$note->recipient}}</span></p>
       <div>
             <x-button flat icon="eye"></x-button>
             <x-button flat icon="trash"></x-button>
