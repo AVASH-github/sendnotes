@@ -20,7 +20,8 @@ export default {
         extend: {
             colors:{
                     primary:colors.rose,
-
+                    secondary: colors.gray,
+                
             },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],

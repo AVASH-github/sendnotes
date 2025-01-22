@@ -7,6 +7,7 @@ new class extends Component {
 
         public function delete($noteId){
             $note = Note::where('id',$noteId)->first();
+            $this->authorize('delete',$note);
             $note->delete();
         }
 
@@ -30,14 +31,14 @@ new class extends Component {
 </div>
 
 @else
-<x-button primary icon-right="plus" class="mb-6" href="{{route('notes.create')}}" wire:navigate>Create note</x-button>
+<x-button primary icon="plus" class="mb-6" href="{{route('notes.create')}}" wire:navigate>Create note</x-button>
 <div class="grid grid-cols-3 gap-4">
 @foreach ($notes as $note)
-    <x-card wire:key='{{$note->id}}' mt-12>
+    <x-card wire:key='{{$note->id}}' mt-12 class="bg-white">
       <div class="flex justify-between">
       <div>
       
-     <a href="#" 
+     <a href="{{route('notes.edit',$notes)}}"  wire:navigate
         class="text-xl font-bold hover:underline hover:text-blue-500">{{$note->title}}</a>
             <p class="mt-4 text-xs "> 
                 {{Str::limit($note->body,50)}}
@@ -60,11 +61,5 @@ new class extends Component {
 </div>
 @endif
 </div>
-
-
-
-
-
-
 
 </div>

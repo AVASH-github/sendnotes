@@ -23,7 +23,7 @@ new class extends Component {
          'body'=>$this->noteBody,
          'recipient'=>$this->noteRecipient,
          'send_date'=>$this->noteSendDate,
-         'is_published'=>false,
+         'is_published'=>true,
          
       ]);
       redirect(route('notes.index'));
@@ -37,7 +37,7 @@ new class extends Component {
       <x-input icon="user" label="Recipient"  wire:model="noteRecipient" placeholder="yourfriend@email.com"/>
       <x-input icon="calendar" label="Send Date" wire:model="noteSendDate" type="date"/>
       <div class='pt-4'>
-      <x-button wire:click='submit' primary icon="calendar" spinner> Submit</x-button>
+      <x-button type="submit" primary icon="calendar" spinner> Submit</x-button>
       </div>
       <x-errors />
    </form>
