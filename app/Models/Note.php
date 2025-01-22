@@ -8,18 +8,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Note extends Model
 {
-    use HasFactory,HasUuids;
+    use HasFactory, HasUuids;
 
-protected $guarded=[
-    'id',
-];
+    // Explicitly define mass-assignable attributes
+    protected $fillable = [
+        'title',
+        'body',
+        'recipient',
+        'send_date',
+        'is_published',
+    ];
 
-protected $casts=[
-    'is_published'=>'boolean',
-];
+    // Cast attributes to specific data types
+    protected $casts = [
+        'is_published' => 'boolean',
+    ];
 
-public function user(){
-    return $this->belongsTo(User::class);
-}
+    // Automatically load related user model
+    protected $with = ['user'];
 
+    // Define the relationship with User model
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

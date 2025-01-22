@@ -15,10 +15,11 @@ new class extends Component {
 
         public function increaseHeartCount()
         {
-            $this->note->update([
-                'heart_count'=>$this->heartCount+1,
-            ]);
-            $this->heartCount=$this->note->heart_count;
+         // Increment the heart count in the database
+    $this->note->increment('heart_count');
+
+    // Retrieve the updated heart count and store it in $heartCount
+    $this->heartCount = $this->note->heart_count;
         }
 
 }; ?>

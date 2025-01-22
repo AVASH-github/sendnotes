@@ -14,35 +14,46 @@ new #[Layout('layouts.app')] class extends Component{
     public $noteSendDate;
     public $noteIsPublished;
 
-    public function mount(Note $note){
-
-        $this->authorize('update',$note);
-        $this->fill([$note]);
-        $this->noteTitle=$note->title;
-        $this->noteBody=$note->body;
-        $this->noteRecipient=$note->recipient;
-        $this->noteSendDate=$note->send_date;
-        $this->noteIsPublished=$note->is_published;
+public function mount(Note $note)
+{
+    if (!$note) {
+        abort(404, 'Note not found');
     }
+    $this->authorize('update', $note);
 
-    public function savenote(){
-       $validated= $this->validate([
-            'noteTitle'=>'required|string|min:5',
-         'noteBody'=>'required|string|min:20',
-         'noteRecipient'=>'required|email',
-         'noteSendDate'=>'required|date',
-        ]);
-        
-        $this->note->update([
-            'title'=> $this->noteTitle,
-         'body'=>$this->noteBody,
-         'recipient'=>$this->noteRecipient,
-         'send_date'=>$this->noteSendDate,
-         'is_published'=>$this->noteIsPublished,
-        ]);
+    // Bind the passed Note instance
+    $this->note = $note;
 
-        $this->dispatch('note-saved');
-    }
+    // Initialize individual properties
+    $this->noteTitle = $note->title;
+    $this->noteBody = $note->body;
+    $this->noteRecipient = $note->recipient;
+    $this->noteSendDate = $note->send_date;
+    $this->noteIsPublished = $note->is_published;
+}
+
+
+ public function savenote()
+{
+    $validated = $this->validate([
+        'noteTitle' => 'required|string|min:5',
+        'noteBody' => 'required|string|min:20',
+        'noteRecipient' => 'required|email',
+        'noteSendDate' => 'required|date',
+    ]);
+
+    // Update the note instance
+    $this->note->update([
+        'title' => $this->noteTitle,
+        'body' => $this->noteBody,
+        'recipient' => $this->noteRecipient,
+        'send_date' => $this->noteSendDate,
+        'is_published' => $this->noteIsPublished,
+    ]);
+
+    $this->dispatch('note-saved');
+}
+
     
 
 };?>

@@ -1,34 +1,27 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
-const colors = require('tailwindcss/colors')
+const colors = require('tailwindcss/colors');
 
-/** @type {import('tailwindcss').Config} */
 export default {
     content: [
-        // Default Laravel paths
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
-
-    "./vendor/wireui/wireui/src/*.php",
+        "./vendor/wireui/wireui/src/*.php",
         "./vendor/wireui/wireui/ts/**/*.ts",
         "./vendor/wireui/wireui/src/WireUi/**/*.php",
         "./vendor/wireui/wireui/src/Components/**/*.php",
     ],
-
+    darkMode: 'class', // Enable manual dark mode control
     theme: {
         extend: {
-            colors:{
-                    primary:colors.rose,
-                    secondary: colors.gray,
-                
+            colors: {
+                primary: colors.rose,
+                secondary: colors.gray,
             },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
         },
     },
-
-    // Include WireUI's Tailwind config as a preset
-   
 };
