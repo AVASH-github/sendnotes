@@ -10,5 +10,6 @@
         <h3 class="mr-2 text-sm">Sent form {{$user->name}}</h3>
         <livewire:heartreact :note="$note">
     </div>
-
+<x-button flat icon="arrow-left" class="mt-8" href="{{route('notes.index')}}">All Notes</x-button>
 </x-guest-layout>
+ 
