@@ -37,15 +37,14 @@ class NotePolicy
      */
     public function update(User $user, Note $note): bool
     {
-        return $user->id=== $note->user_id;   
+        return $user->id === $note->user_id && now()->isBefore($note->send_date);
     }
-
     /**
      * Determine whether the user can delete the model.
      */
     public function delete(User $user, Note $note): bool
     {
-        return $user->id=== $note->user_id && now() <= $note->send_date;
+        return $user->id === $note->user_id && now() <= $note->send_date;
     }
 
     /**

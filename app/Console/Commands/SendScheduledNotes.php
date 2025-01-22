@@ -28,17 +28,20 @@ class SendScheduledNotes extends Command
      */
     public function handle()
     {
-       $now=Carbon::now();
 
-       $notes=Note::where('is_published',true)
-       ->where('send_date',$now->toDateString())
-       ->get();
+      $now = Carbon::now();
+
+       $notes = Note::where('is_published',true)
+                     ->where('send_date',$now->toDateString()) 
+                     ->get();
 
        $noteCount=$notes->count();
        $this->infO("Sending {$noteCount} scheduled notes.");
 
-     foreach($notes as $note){
-        SendEmail::dispatch($note);
+       foreach ($notes as $note) {
+         SendEmail::dispatch($note);
+         $this->info("Scheduled email dispatched for Note ID: {$note->id}");
      }
+
     }
 }
